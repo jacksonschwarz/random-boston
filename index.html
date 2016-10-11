@@ -65,7 +65,7 @@
 				<h5>Scope</h5>
 			    <p class="range-field">
 			    <label for="scope" style="display: inline-block;">Wide</label>
-			   	 <input type="range" id="scope" min=1 max=100 style="width:250px;"/>
+			   	 <input type="range" id="scope" min=1 max=150 style="width:250px;"/>
 			   	 <label for="scope" style="display: inline-block;">Narrow</label>
 			    </p>
 		    </div>
@@ -88,6 +88,7 @@
           center: {lat: -34.397, lng: 150.644},
           zoom: 10
         });
+      }
       $( document ).ready(function(){
       	$("#map").hide();
       	$("#submit").click(function(){
@@ -120,48 +121,17 @@
 						     		coords: [e.lat-Math.random()/scale, e.lon-Math.random()/scale], // GPS coords
 						    	});
 					    	}
-      		$("#map").show();
-	      	$("#map").googleMap();
-	    	$("#map").addMarker({
-	    		address:$("#postal-address").val(),
-	    		success:function(e){
-		    		for(var i=0;i<6;i++){
-				    	var chance=Math.random();
-				    	var scale=25;
-				    	if(chance < 0.25){
-					    	$("#map").addMarker({
-					     		coords: [e.lat+Math.random()/scale, e.lon+Math.random()/scale], // GPS coords
-					    	});
-				    	}
-				    	else if(chance > 0.25 && chance < 0.5){
-				    		$("#map").addMarker({
-					     		coords: [e.lat-Math.random()/scale, e.lon+Math.random()/scale], // GPS coords
-					    	});	
-				    	}
-				    	else if(chance > 0.5 && chance < 0.75){
-				    		$("#map").addMarker({
-					     		coords: [e.lat+Math.random()/scale, e.lon-Math.random()/scale], // GPS coords
-					    	});
-				    	}
-				    	else{
-				    		$("#map").addMarker({
-					     		coords: [e.lat-Math.random()/scale, e.lon-Math.random()/scale], // GPS coords
-					    	});
-				    	}
-
 					    }
-		    		}
-	    		});
-      		}
-      		else{
-      			Materialize.toast("Please enter a postal address", 4000, "red rounded");
-      		}
+					}
+      			});	
  
-      	})
-
+	      }
+	      else{
+	      	Materialize.toast("Please enter a postal address", 1750, "red rounded");
+	      }
+	  });
       });
-      }
-    </script>
+	</script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPgbJm7ZCsVI7SFJ-mAXNIpkIlGEEZCPY&callback=initMap"
     async defer></script>
   </body>
