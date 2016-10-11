@@ -74,6 +74,10 @@
 	</div>
 	<button class="green lighten-1 wave-effect waves-light btn" id="submit">Submit</button>
 	<div id="map"></div>
+	<div id="way"></div>
+	<small>
+	Made by Jackson Schwarz. Check out my other projects at <a href="jacksonschwarz.github.io">my website</a>
+	</small>
 	<br>
 	<script src="javascripts/jquery-3.1.1.min.js"></script>
 	<script src="javascripts/jquery.googlemap.js"></script>
@@ -102,24 +106,61 @@
 			    		for(var i=0;i<6;i++){
 					    	var chance=Math.random();
 					    	if(chance < 0.25){
+					    		var randX=Math.random()/scale;
+					    		var randY=Math.random()/scale;
 						    	$("#map").addMarker({
-						     		coords: [e.lat+Math.random()/scale, e.lon+Math.random()/scale], // GPS coords
+						     		coords: [e.lat+randX, e.lon+randY],// GPS coords
+						     		url: "https://maps.google.com?saddr="+e.lat+","+e.lon+"&daddr="+(e.lat+randX)+","+(e.lon+randY)
 						    	});
+						    	// $("#map").addWay({
+						    	// 	start:$("#postal-address").val(),
+						    	// 	end: [e.lat+Math.random()/scale, e.lon+Math.random()/scale],
+						    	// 	route:'way',
+						    	// 	language:'english'
+						    	// });
 					    	}
 					    	else if(chance > 0.25 && chance < 0.5){
+					    		var randX=Math.random()/scale;
+					    		var randY=Math.random()/scale;
 					    		$("#map").addMarker({
-						     		coords: [e.lat-Math.random()/scale, e.lon+Math.random()/scale], // GPS coords
+						     		coords: [e.lat-randX, e.lon+randY], // GPS coords
+						     		url: "https://maps.google.com?saddr="+e.lat+","+e.lon+"&daddr="+(e.lat-randX)+","+(e.lon+randY)
 						    	});	
+
+						    	// $("#map").addWay({
+						    	// 	start:$("#postal-address").val(),
+						    	// 	end: [e.lat+Math.random()/scale, e.lon+Math.random()/scale],
+						    	// 	route:'way',
+						    	// 	language:'english'
+						    	// });
 					    	}
 					    	else if(chance > 0.5 && chance < 0.75){
+					    		var randX=Math.random()/scale;
+					    		var randY=Math.random()/scale;
 					    		$("#map").addMarker({
-						     		coords: [e.lat+Math.random()/scale, e.lon-Math.random()/scale], // GPS coords
+						     		coords: [e.lat+randX, e.lon-randY], // GPS coords
+						     		url: "https://maps.google.com?saddr="+e.lat+","+e.lon+"&daddr="+(e.lat-randX)+","+(e.lon+randY)
 						    	});
+						    	// $("#map").addWay({
+						    	// 	start:$("#postal-address").val(),
+						    	// 	end: [e.lat+Math.random()/scale, e.lon+Math.random()/scale],
+						    	// 	route:'way',
+						    	// 	language:'english'
+						    	// });
 					    	}
 					    	else if(chance > 0.75){
+					    		var randX=Math.random()/scale;
+					    		var randY=Math.random()/scale;
 					    		$("#map").addMarker({
-						     		coords: [e.lat-Math.random()/scale, e.lon-Math.random()/scale], // GPS coords
+						     		coords: [e.lat-randX, e.lon-randY],// GPS coords
+						     		url: "https://maps.google.com?saddr="+e.lat+","+e.lon+"&daddr="+(e.lat-randX)+","+(e.lon-randY)
 						    	});
+						    	// $("#map").addWay({
+						    	// 	start:$("#postal-address").val(),
+						    	// 	end: [e.lat+Math.random()/scale, e.lon+Math.random()/scale],
+						    	// 	route:'way',
+						    	// 	language:'english'
+						    	// });
 					    	}
 					    }
 					}
