@@ -63,25 +63,26 @@
 		<div class="row">
 			<div class="row">
 				<h5>Scope</h5>
-				<input class="with-gap" type="radio" name="group1" id="narrow"/>
-			    <label for="narrow">Narrow</label>
-			    <input class="with-gap" type="radio" name="group1" id="standard" />
-			    <label for="standard">Standard</label>
-			    <input class="with-gap" type="radio" name="group1" id="wide" />
-			    <label for="wide">Wide</label>
+			    <p class="range-field">
+			    <label for="scope" style="display: inline-block;">Wide</label>
+			   	 <input type="range" id="scope" min=1 max=100 style="width:250px;"/>
+			   	 <label for="scope" style="display: inline-block;">Narrow</label>
+			    </p>
 		    </div>
 		</div>
 		</div>
 	</div>
-	<button class="wave-effect waves-light btn" id="submit">Submit</button>
+	<button class="green lighten-1 wave-effect waves-light btn" id="submit">Submit</button>
 	<div id="map"></div>
 	<br>
 	<script src="javascripts/jquery-3.1.1.min.js"></script>
 	<script src="javascripts/jquery.googlemap.js"></script>
+	<script src="javascripts/js/materialize.min.js"></script>
     <script>
       var map;
       var la;
       var ln;
+      var scale;
       function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -34.397, lng: 150.644},
@@ -90,39 +91,44 @@
       $( document ).ready(function(){
       	$("#map").hide();
       	$("#submit").click(function(){
-      		alert($("#standard").val());
-      		$("#map").show();
-	      	$("#map").googleMap();
-	    	$("#map").addMarker({
-	    		address:$("#postal-address").val(),
-	    		success:function(e){
-		    		for(var i=0;i<6;i++){
-				    	var chance=Math.random();
-				    	var scale=25;
-				    	if(chance < 0.25){
-					    	$("#map").addMarker({
-					     		coords: [e.lat+Math.random()/scale, e.lon+Math.random()/scale], // GPS coords
-					    	});
-				    	}
-				    	else if(chance > 0.25 && chance < 0.5){
-				    		$("#map").addMarker({
-					     		coords: [e.lat-Math.random()/scale, e.lon+Math.random()/scale], // GPS coords
-					    	});	
-				    	}
-				    	else if(chance > 0.5 && chance < 0.75){
-				    		$("#map").addMarker({
-					     		coords: [e.lat+Math.random()/scale, e.lon-Math.random()/scale], // GPS coords
-					    	});
-				    	}
-				    	else{
-				    		$("#map").addMarker({
-					     		coords: [e.lat-Math.random()/scale, e.lon-Math.random()/scale], // GPS coords
-					    	});
-				    	}
+      		if($("#postal-address").val()){
+	     		scale=$("#scope").val();
+	      		$("#map").show();
+		      	$("#map").googleMap();
+		    	$("#map").addMarker({
+		    		address:$("#postal-address").val(),
+		    		success:function(e){
+			    		for(var i=0;i<6;i++){
+					    	var chance=Math.random();
+					    	if(chance < 0.25){
+						    	$("#map").addMarker({
+						     		coords: [e.lat+Math.random()/scale, e.lon+Math.random()/scale], // GPS coords
+						    	});
+					    	}
+					    	else if(chance > 0.25 && chance < 0.5){
+					    		$("#map").addMarker({
+						     		coords: [e.lat-Math.random()/scale, e.lon+Math.random()/scale], // GPS coords
+						    	});	
+					    	}
+					    	else if(chance > 0.5 && chance < 0.75){
+					    		$("#map").addMarker({
+						     		coords: [e.lat+Math.random()/scale, e.lon-Math.random()/scale], // GPS coords
+						    	});
+					    	}
+					    	else if(chance > 0.75){
+					    		$("#map").addMarker({
+						     		coords: [e.lat-Math.random()/scale, e.lon-Math.random()/scale], // GPS coords
+						    	});
+					    	}
 
-				    }
-	    		}
-    		});
+					    }
+		    		}
+	    		});
+      		}
+      		else{
+      			Materialize.toast("Please enter a postal address", 4000, "red rounded");
+      		}
+ 
       	})
 
       });
