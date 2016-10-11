@@ -91,6 +91,7 @@
       $( document ).ready(function(){
       	$("#map").hide();
       	$("#submit").click(function(){
+<<<<<<< HEAD
       		if($("#postal-address").val()){
 	     		scale=$("#scope").val();
 	      		$("#map").show();
@@ -120,6 +121,36 @@
 						     		coords: [e.lat-Math.random()/scale, e.lon-Math.random()/scale], // GPS coords
 						    	});
 					    	}
+=======
+      		$("#map").show();
+	      	$("#map").googleMap();
+	    	$("#map").addMarker({
+	    		address:$("#postal-address").val(),
+	    		success:function(e){
+		    		for(var i=0;i<6;i++){
+				    	var chance=Math.random();
+				    	var scale=25;
+				    	if(chance < 0.25){
+					    	$("#map").addMarker({
+					     		coords: [e.lat+Math.random()/scale, e.lon+Math.random()/scale], // GPS coords
+					    	});
+				    	}
+				    	else if(chance > 0.25 && chance < 0.5){
+				    		$("#map").addMarker({
+					     		coords: [e.lat-Math.random()/scale, e.lon+Math.random()/scale], // GPS coords
+					    	});	
+				    	}
+				    	else if(chance > 0.5 && chance < 0.75){
+				    		$("#map").addMarker({
+					     		coords: [e.lat+Math.random()/scale, e.lon-Math.random()/scale], // GPS coords
+					    	});
+				    	}
+				    	else{
+				    		$("#map").addMarker({
+					     		coords: [e.lat-Math.random()/scale, e.lon-Math.random()/scale], // GPS coords
+					    	});
+				    	}
+>>>>>>> origin/gh-pages
 
 					    }
 		    		}
