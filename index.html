@@ -1,27 +1,3 @@
-<!-- <head>
-	<link rel="stylesheet" href="styles/styles.css"/>
-	<link rel="stylesheet" href="styles/css/materialize.min.css">
-</head>
-<body class="blue lighten-3">
-	<div class="blue card-panel">
-		<div class="row">
-			<div class="col s7">
-				<h3 class="white-text">Pick a spot, any spot...</h3>
-			</div>
-		</div>
-	</div>
-	<div id="map"></div>
-</body>
-<script>
-	var map;
-	function initMap(){
-		map=new google.maps.Map(document.getElementById('map'),{
-			center: {lat: -34.397, lng: 150.644},
-         	zoom: 8
-      });
-	}
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPgbJm7ZCsVI7SFJ-mAXNIpkIlGEEZCPY&callback=initMap" async defer></script> -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -29,151 +5,70 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <link rel="stylesheet" href="styles/styles.css"/>
-	<link rel="stylesheet" href="styles/css/materialize.min.css">
-    <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 500px;
-        width:800px;
-        border:1px dashed black;
-        display:table;
-        margin: 0 auto;
-      }
-    </style>
+	 <link rel="stylesheet" href="styles/css/materialize.min.css">
   </head>
   <body>
   	<div class="blue card-panel">
 		<div class="row">
 			<div class="col s7">
-				<h3 class="white-text">Pick a spot, any spot...</h3>
-				<p class="white-text">Enter a postal address and a scope, then press the button to have 5 different points show up in the specified range.</p>
+				<h3 class="white-text">Welcome to <strong>Dartboard</strong></h3>
+				<p class="white-text">Fill out the form, click on a point for directions to that point</p>
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col s4">
-			<h5>Postal Address</h5>
-			<input id="postal-address" type="text" placeholder="Postal Address of your center point"/>
-		</div>
-		<div class="col s4">
+    <div class="row">
+      <div class="col s6">
+		      <h5>Postal Address</h5>
+		      <input id="postal-address" type="text" placeholder="Postal Address of your center point"/>
+      </div>
+    </div>
 		<div class="row">
-			<div class="row">
-				<h5>Scope</h5>
-			    <p class="range-field">
-			    <label for="scope" style="display: inline-block;">Wide</label>
-			   	 <input type="range" id="scope" min=1 max=150 style="width:250px;"/>
-			   	 <label for="scope" style="display: inline-block;">Narrow</label>
-			    </p>
-		    </div>
+        <div class="col s6">
+  				<h5>Markers</h5>
+          <p class="grey-text text-lighten-1">How many markers do you want to be placed?</p>
+  			    <p class="range-field">
+  			    <label for="marker-amount" style="display: inline-block;">1</label>
+  			   	 <input type="range" id="marker-amount" min=1 max=15 style="width:250px;"/>
+  			   	 <label for="marker-amount" style="display: inline-block;">15</label>
+  			    </p>
+        </div>
 		</div>
-		</div>
-	</div>
+    <form action="#">
+      <div class="row" id="scope-container">
+        <div class="col s2">
+          <input name="scope" type="radio" class="with-gap" id="scope1">
+          <label for="scope1">Local</label>
+        </div>
+        <div class="col s2">
+          <input name="scope" class="with-gap" type="radio" id="scope2">
+          <label for="scope2">Narrow</label>
+        </div>
+        <div class="col s2">
+          <input name="scope" class="with-gap" type="radio" id="scope3">
+          <label for="scope3">Normal</label>
+        </div>
+        <div class="col s2">
+          <input name="scope" class="with-gap" type="radio" id="scope4">
+          <label for="scope4">Wide</label>
+        </div>
+        <div class="col s2">
+          <input name="scope" class="with-gap" type="radio" id="scope5">
+          <label for="scope5">Broad</label>
+        </div>
+      </div>
+  </form>
 	<button class="green lighten-1 wave-effect waves-light btn" id="submit">Submit</button>
 	<div id="map"></div>
-	<div id="way"></div>
+  <br>
 	<small>
 	Made by Jackson Schwarz. Check out my other projects at <a href="jacksonschwarz.github.io">my website</a>
 	</small>
 	<br>
-	<script src="javascripts/jquery-3.1.1.min.js"></script>
-	<script src="javascripts/jquery.googlemap.js"></script>
-	<script src="javascripts/js/materialize.min.js"></script>
-    <script>
-      var map;
-      var la;
-      var ln;
-      var scale;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 10
-        });
-      }
-      $( document ).ready(function(){
-      	$("#map").hide();
-      	$("#submit").click(function(){
-      		if($("#postal-address").val()){
-	     		scale=$("#scope").val();
-	      		$("#map").show();
-		      	$("#map").googleMap();
-		    	$("#map").addMarker({
-		    		address:$("#postal-address").val(),
-		    		success:function(e){
-			    		for(var i=0;i<6;i++){
-					    	var chance=Math.random();
-					    	if(chance < 0.25){
-					    		var randX=Math.random()/scale;
-					    		var randY=Math.random()/scale;
-						    	$("#map").addMarker({
-						     		coords: [e.lat+randX, e.lon+randY],// GPS coords
-						     		url: "https://maps.google.com?saddr="+e.lat+","+e.lon+"&daddr="+(e.lat+randX)+","+(e.lon+randY)
-						    	});
-						    	// $("#map").addWay({
-						    	// 	start:$("#postal-address").val(),
-						    	// 	end: [e.lat+Math.random()/scale, e.lon+Math.random()/scale],
-						    	// 	route:'way',
-						    	// 	language:'english'
-						    	// });
-					    	}
-					    	else if(chance > 0.25 && chance < 0.5){
-					    		var randX=Math.random()/scale;
-					    		var randY=Math.random()/scale;
-					    		$("#map").addMarker({
-						     		coords: [e.lat-randX, e.lon+randY], // GPS coords
-						     		url: "https://maps.google.com?saddr="+e.lat+","+e.lon+"&daddr="+(e.lat-randX)+","+(e.lon+randY)
-						    	});	
-
-						    	// $("#map").addWay({
-						    	// 	start:$("#postal-address").val(),
-						    	// 	end: [e.lat+Math.random()/scale, e.lon+Math.random()/scale],
-						    	// 	route:'way',
-						    	// 	language:'english'
-						    	// });
-					    	}
-					    	else if(chance > 0.5 && chance < 0.75){
-					    		var randX=Math.random()/scale;
-					    		var randY=Math.random()/scale;
-					    		$("#map").addMarker({
-						     		coords: [e.lat+randX, e.lon-randY], // GPS coords
-						     		url: "https://maps.google.com?saddr="+e.lat+","+e.lon+"&daddr="+(e.lat-randX)+","+(e.lon+randY)
-						    	});
-						    	// $("#map").addWay({
-						    	// 	start:$("#postal-address").val(),
-						    	// 	end: [e.lat+Math.random()/scale, e.lon+Math.random()/scale],
-						    	// 	route:'way',
-						    	// 	language:'english'
-						    	// });
-					    	}
-					    	else if(chance > 0.75){
-					    		var randX=Math.random()/scale;
-					    		var randY=Math.random()/scale;
-					    		$("#map").addMarker({
-						     		coords: [e.lat-randX, e.lon-randY],// GPS coords
-						     		url: "https://maps.google.com?saddr="+e.lat+","+e.lon+"&daddr="+(e.lat-randX)+","+(e.lon-randY)
-						    	});
-						    	// $("#map").addWay({
-						    	// 	start:$("#postal-address").val(),
-						    	// 	end: [e.lat+Math.random()/scale, e.lon+Math.random()/scale],
-						    	// 	route:'way',
-						    	// 	language:'english'
-						    	// });
-					    	}
-					    }
-					}
-      			});	
- 
-	      }
-	      else{
-	      	Materialize.toast("Please enter a postal address", 1750, "red rounded");
-	      }
-	  });
-      });
-	</script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPgbJm7ZCsVI7SFJ-mAXNIpkIlGEEZCPY&callback=initMap"
-    async defer></script>
   </body>
+  <script src="javascripts/jquery-3.1.1.min.js"></script>
+  <script src="javascripts/jquery.googlemap.js"></script>
+  <script src="javascripts/js/materialize.min.js"></script>
+  <script src="javascripts/main.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPgbJm7ZCsVI7SFJ-mAXNIpkIlGEEZCPY&callback=initMap"
+  async defer></script>
 </html>
