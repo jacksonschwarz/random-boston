@@ -71,10 +71,21 @@ function parseScope(){
 
   }
 }
+function handleErrors(){
+  if(!($("#postal-address").val())){
+    Materialize.toast("Please fill out a postal address", 1750 , "red rounded")
+    return false;
+  }
+  if(!parseScope()){
+    Materialize.toast("Please select a scope", 1750, "red rounded")
+    return false;
+  }
+  return true;
+}
 $( document ).ready(function(){
   $("#map").hide();
   $("#submit").click(function(){
-    if($("#postal-address").val() && parseScope()){
+    if(handleErrors()){
     let markers=$("#marker-amount").val()
     //scale=$("scope").val()
     scale=parseScope();
@@ -90,9 +101,6 @@ $( document ).ready(function(){
         }
       }
     });
-  }
-  else{
-    Materialize.toast("Error: Please fill out the entire form.", 1750, "red rounded");
   }
 });
 });
